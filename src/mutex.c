@@ -11,7 +11,6 @@
 int calculate_sample_size(double std_dev, double mean);
 void* thread_work(void* rank);
 void save_results_to_file(const char* filename, float mMember, float mInsert, float mDelete, int threadCount, double mean, double stdDev);
-double get_time();
 
 /* Global variables */
 struct list_node_s* head = NULL; // Shared linked list
@@ -58,7 +57,6 @@ void* thread_work(void* rank) {
             pthread_mutex_unlock(&mutex);
         }
     }
-    // fprintf(stderr, "Thread %ld: Member: %d, Insert: %d, Delete: %d\n", (long)rank, my_member, my_insert, my_delete);
     return NULL;
 }
 
@@ -99,6 +97,7 @@ int main(int argc, char* argv[]) {
     pthread_mutex_init(&mutex, NULL);
 
     srand(time(NULL));
+    clock_t start, finish;
 
     double total_time = 0.0, mean, std_dev, variance;
     int initial_runs = 20;
@@ -120,14 +119,14 @@ int main(int argc, char* argv[]) {
         member_count = insert_count = delete_count = 0;
 
         /* Create and join threads */
-        double start = get_time();
+        start = clock();
         for (long thread = 0; thread < thread_count; thread++) {
             pthread_create(&thread_handles[thread], NULL, thread_work, (void*)thread);
         }
         for (long thread = 0; thread < thread_count; thread++) {
             pthread_join(thread_handles[thread], NULL);
         }
-        double finish = get_time();
+        finish = clock();
 
         double elapsed = finish - start;
         times[run] = elapsed;
@@ -166,16 +165,16 @@ int main(int argc, char* argv[]) {
 
             member_count = insert_count = delete_count = 0;
 
-            double start = get_time();
+            start = clock();
             for (long thread = 0; thread < thread_count; thread++) {
                 pthread_create(&thread_handles[thread], NULL, thread_work, (void*)thread);
             }
             for (long thread = 0; thread < thread_count; thread++) {
                 pthread_join(thread_handles[thread], NULL);
             }
-            double finish = get_time();
+            finish = clock();
 
-            double elapsed = finish - start;
+            double elapsed = ((double)(finish - start))/ CLOCKS_PER_SEC;
             times[run] = elapsed;
             total_time += elapsed;
 
@@ -220,11 +219,4 @@ void save_results_to_file(const char* filename, float mMember, float mInsert, fl
     }
     fprintf(fp, "n: %d | m: %d | mMember: %f%% | mInsert: %f%% | mDelete: %f%% | threadCount: %d | mean: %f | stdDev: %f\n", n, m, mMember, mInsert, mDelete, threadCount, mean, stdDev);
     fclose(fp);
-}
-
-/* Function to get the current time in microseconds */
-double get_time() {
-    struct timespec time;
-    clock_gettime(CLOCK_MONOTONIC, &time);
-    return (time.tv_sec + time.tv_nsec / 1e9)*1e6;
 }
