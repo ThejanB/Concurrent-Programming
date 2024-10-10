@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
     }
 
 
-    int initial_runs = 20;  // Initial number of runs
+    int initial_runs = 30;  // Initial number of runs
     double *times; // Array to store execution times
     double sum = 0.0, mean, std_dev, variance;
 

@@ -197,7 +197,7 @@ int main(int argc, char* argv[]) {
     }
 
     printf("Final Mean Execution Time: %f microseconds | Final Standard Deviation: %f microseconds\n", mean, std_dev);
-    printf("Total Samples: %d\n", required_runs);
+    printf("Total Samples: %d\n\n", required_runs);
 
     save_results_to_file("results/rw_lock_results.txt", mMember_fraction, mInsert_fraction, mDelete_fraction, thread_count, mean, std_dev);
 
