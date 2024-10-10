@@ -1,55 +1,77 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def parse_single_result(file_path):
-    thread_counts = []
-    means = []
-    std_devs = []
-    with open(file_path, 'r') as file:
-        for line in file:
-            parts = line.strip().split('|')
-            thread_count = int(parts[-3].split(':')[1].strip())
-            mean = float(parts[-2].split(':')[1].strip())
-            std_dev = float(parts[-1].split(':')[1].strip())
-            thread_counts.append(thread_count)
-            means.append(mean)
-            std_devs.append(std_dev)
-    return thread_counts, means, std_devs
+def parse_and_filter_results(serial_path, mutex_path, rw_lock_path, filters):
+    data = {f'{k}': {'Serial': [(2, 0, 0), (4, 0, 0), (8, 0, 0)], 'Mutex': [], 'ReadWriteLock': []} for k in filters.keys()}
+    
+    # Parse a single file and append data to the right category
+    def parse_file(file_path, implementation):
+        with open(file_path, 'r') as file:
+            for line in file:
+                print(line)
+                parts = line.strip().split('|')
+                mMember = parts[2].split(':')[1].strip()
+                mInsert = parts[3].split(':')[1].strip()
+                mDelete = parts[4].split(':')[1].strip()
+                param_key = f'{mMember}_{mInsert}_{mDelete}'
+                print(param_key)
 
-# Example of how to call this function:
-# serial_thread_counts, serial_means, serial_std_devs = parse_single_result('/path/to/serial_results.txt')
+                if param_key in data:
+                    thread_count = int(parts[-3].split(':')[1].strip())
+                    mean = float(parts[-2].split(':')[1].strip())
+                    std_dev = float(parts[-1].split(':')[1].strip())
+                    data[param_key][implementation].append((thread_count, mean, std_dev))
 
+    parse_file(serial_path, 'Serial')
+    parse_file(mutex_path, 'Mutex')
+    parse_file(rw_lock_path, 'ReadWriteLock')
+    print(data)
+    return data
 
-# File paths
-serial_path = '../results/serial_results.txt'
-mutex_path ='../results/mutex_results.txt'
+def plot_data(data, param_key, title):
+    x = np.arange(4)  # Thread counts: 1, 2, 4, 8
+    width = 0.25  # Bar width
+
+    fig, ax = plt.subplots()
+
+    for i, imp in enumerate(['Serial', 'Mutex', 'ReadWriteLock']):
+        if data[param_key][imp]:  # Check if there is data for the implementation
+            tc_sorted = sorted(data[param_key][imp])  # Sort by thread count
+            means = [d[1] for d in tc_sorted]
+            std_devs = [d[2] for d in tc_sorted]
+            ax.bar(x + i * width, means, width, label=imp, yerr=std_devs, capsize=5)
+
+    ax.set_xlabel('Thread Count')
+    ax.set_ylabel('Mean Time (ms)')
+    ax.set_title(title)
+    ax.set_xticks(x + width)
+    ax.set_xticklabels([1, 2, 4, 8])
+    ax.legend()
+
+    fig.tight_layout()
+    plt.show()
+
+mMember = float(input("Enter mMember value: "))
+mInsert = float(input("Enter mInsert value: "))
+mDelete = float(input("Enter mDelete value: "))
+
+mMember_str = f"{mMember:.6f}%"
+mInsert_str = f"{mInsert:.6f}%"
+mDelete_str = f"{mDelete:.6f}%"
+
+filters ={
+    f"{mMember_str}_{mInsert_str}_{mDelete_str}" : {}
+}
+
+# File paths (adjust these to your actual files)
+serial_path = '../results/Serial_results.txt'
+mutex_path = '../results/mutex_results.txt'
 rw_lock_path = '../results/rw_lock_results.txt'
 
-# Read the data
-serial_thread_counts, serial_means, serial_std_devs = parse_single_result(serial_path)
-mutex_thread_counts, mutex_means, mutex_std_devs = parse_single_result(mutex_path)
-rw_lock_thread_counts, rw_lock_means, rw_lock_std_devs = parse_single_result(rw_lock_path)
+all_data = parse_and_filter_results(serial_path, mutex_path, rw_lock_path, filters)
 
-
-# Assuming thread counts are the same across files; if not, you will need to handle this
-x = np.arange(len(mutex_thread_counts))  # the label locations
-width = 0.25  # the width of the bars
-
-fig, ax = plt.subplots()
-rects1 = ax.bar(x - width, serial_means, width, label='Serial', yerr=serial_std_devs, capsize=5)
-rects2 = ax.bar(x, mutex_means, width, label='Mutex', yerr=mutex_std_devs, capsize=5)
-rects3 = ax.bar(x + width, rw_lock_means, width, label='ReadWriteLock', yerr=rw_lock_std_devs, capsize=5)
-
-# Add some text for labels, title and custom x-axis tick labels, etc.
-ax.set_xlabel('Thread Count')
-ax.set_ylabel('Mean Time (ms)')
-ax.set_title('Performance by Implementation and Thread Count')
-ax.set_xticks(x)
-ax.set_xticklabels(serial_thread_counts)
-ax.legend()
-ax.set_ylim(0, max(serial_means + mutex_means + rw_lock_means) * 1.1)  # Adjust y-axis scale dynamically
-
-
-fig.tight_layout()
-
-plt.show()
+for key, title in zip(filters.keys(), [
+    'mMember = 0.99, mInsert = 0.005, mDelete = 0.005',
+    'mMember = 0.90, mInsert = 0.05, mDelete = 0.05',
+    'mMember = 0.50, mInsert = 0.25, mDelete = 0.25']):
+    plot_data(all_data, key, title)
