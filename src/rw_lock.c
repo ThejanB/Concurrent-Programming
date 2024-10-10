@@ -88,7 +88,7 @@ int main(int argc, char* argv[]) {
     srand(time(NULL));
     clock_t start, finish;
     double elapsed;
-    
+
     /* Initialize the linked list with n unique random values */
     int count = 0;
     while (count < n) {
@@ -98,7 +98,6 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    /* Initialize read-write lock and mutex */
     pthread_rwlock_init(&rwlock, NULL);
 
     /* Timing variables */
@@ -111,6 +110,7 @@ int main(int argc, char* argv[]) {
     }
 
     /* Initial runs */
+    fprintf(stderr, "Running %d initial runs to estimate mean and standard deviation to calculate required sample size\n", initial_runs);
     for (int run = 0; run < initial_runs; run++) {
         pthread_t* thread_handles = malloc(thread_count * sizeof(pthread_t));
         if (thread_handles == NULL) {
@@ -120,37 +120,35 @@ int main(int argc, char* argv[]) {
 
         member_count = insert_count = delete_count = 0;
 
+        /* Create and join threads */
         start = clock();
-
         for (long thread = 0; thread < thread_count; thread++) {
             pthread_create(&thread_handles[thread], NULL, thread_work, (void*)thread);
         }
-
         for (long thread = 0; thread < thread_count; thread++) {
             pthread_join(thread_handles[thread], NULL);
         }
-
         finish = clock();
-        elapsed = ((double)(finish - start))/ CLOCKS_PER_SEC;
+        elapsed = ((double)(finish - start))/ CLOCKS_PER_SEC * 1000000; // Convert to microseconds
         times[run] = elapsed;
         total_time += elapsed;
 
         free(thread_handles);
     }
 
-    /* Compute mean */
+    /* Compute mean and standard deviation */
     mean = total_time / initial_runs;
-
-    /* Compute standard deviation */
     variance = 0.0;
     for (int i = 0; i < initial_runs; i++) {
         variance += (times[i] - mean) * (times[i] - mean);
     }
     variance = variance / (initial_runs - 1);
     std_dev = sqrt(variance);
+    fprintf(stderr, "Initial Mean Execution Time: %f microseconds | Initial Standard Deviation: %f microseconds\n", mean, std_dev);
 
     /* Calculate required sample size */
     int required_runs = calculate_sample_size(std_dev, mean);
+    fprintf(stderr, "Required Samplee Size: %d\n", required_runs);
     if (required_runs < initial_runs) required_runs = initial_runs;
 
     /* Additional runs if needed */
@@ -181,7 +179,7 @@ int main(int argc, char* argv[]) {
             }
 
             finish = clock();
-            elapsed = ((double)(finish - start))/ CLOCKS_PER_SEC;
+            elapsed = ((double)(finish - start))/ CLOCKS_PER_SEC * 1000000; // Convert to microseconds
             times[run] = elapsed;
             total_time += elapsed;
 
@@ -198,7 +196,7 @@ int main(int argc, char* argv[]) {
         std_dev = sqrt(variance);
     }
 
-    printf("Final Mean Execution Time: %f seconds | Final Standard Deviation: %f seconds\n", mean, std_dev);
+    printf("Final Mean Execution Time: %f microseconds | Final Standard Deviation: %f microseconds\n", mean, std_dev);
     printf("Total Samples: %d\n", required_runs);
 
     save_results_to_file("results/rw_lock_results.txt", mMember_fraction, mInsert_fraction, mDelete_fraction, thread_count, mean, std_dev);

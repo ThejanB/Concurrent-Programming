@@ -42,17 +42,14 @@ void* thread_work(void* rank) {
             Member(val, head);
             member_count++;
             pthread_mutex_unlock(&mutex);
-            // my_member++;
         } else if (prob < (float)(mMember + mInsert) / total_ops) {
             pthread_mutex_lock(&mutex);
             Insert(val, &head);
             insert_count++;
-            // my_insert++;
             pthread_mutex_unlock(&mutex);
         } else {
             pthread_mutex_lock(&mutex);
             Delete(val, &head);
-            // my_delete++;
             delete_count++;
             pthread_mutex_unlock(&mutex);
         }
@@ -129,7 +126,8 @@ int main(int argc, char* argv[]) {
         }
         finish = clock();
 
-        elapsed = ((double)(finish - start))/ CLOCKS_PER_SEC;
+        elapsed = ((double)(finish - start))/ CLOCKS_PER_SEC * 1000000; // Convert to microseconds
+        
         times[run] = elapsed;
         total_time += elapsed;
 
@@ -146,6 +144,7 @@ int main(int argc, char* argv[]) {
     std_dev = sqrt(variance);
     fprintf(stderr, "Initial Mean Execution Time: %f microseconds | Initial Standard Deviation: %f microseconds\n", mean, std_dev);
     
+    /* Calculate required sample size */
     int required_runs = calculate_sample_size(std_dev, mean);
     fprintf(stderr, "Required Samplee Size: %d\n", required_runs);
     if (required_runs < initial_runs) required_runs = initial_runs;
@@ -175,7 +174,7 @@ int main(int argc, char* argv[]) {
             }
             finish = clock();
 
-            elapsed = ((double)(finish - start))/ CLOCKS_PER_SEC;
+            elapsed = ((double)(finish - start))/ CLOCKS_PER_SEC * 1000000; // Convert to microseconds
             times[run] = elapsed;
             total_time += elapsed;
 
