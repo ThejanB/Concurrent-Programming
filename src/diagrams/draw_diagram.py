@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def parse_and_filter_results(serial_path, mutex_path, rw_lock_path, filters):
-    data = {f'{k}': {'Serial': [], 'Mutex': [], 'ReadWriteLock': []} for k in filters.keys()}
+    data = {f'{k}': {'Serial': [(2, 0, 0), (4, 0, 0), (8, 0, 0)], 'Mutex': [], 'ReadWriteLock': []} for k in filters.keys()}
     
     # Parse a single file and append data to the right category
     def parse_file(file_path, implementation):
@@ -51,11 +51,16 @@ def plot_data(data, param_key, title):
     fig.tight_layout()
     plt.show()
 
-# Define filters for the specific conditions you need
-filters = {
-    '0.990000%_0.005000%_0.005000%': {},
-    '0.900000%_0.050000%_0.050000%': {},
-    '0.500000%_0.250000%_0.250000%': {}
+mMember = float(input("Enter mMember value: "))
+mInsert = float(input("Enter mInsert value: "))
+mDelete = float(input("Enter mDelete value: "))
+
+mMember_str = f"{mMember:.6f}%"
+mInsert_str = f"{mInsert:.6f}%"
+mDelete_str = f"{mDelete:.6f}%"
+
+filters ={
+    f"{mMember_str}_{mInsert_str}_{mDelete_str}" : {}
 }
 
 # File paths (adjust these to your actual files)
