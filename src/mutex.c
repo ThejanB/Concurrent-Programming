@@ -128,7 +128,7 @@ int main(int argc, char* argv[]) {
         }
         finish = clock();
 
-        double elapsed = finish - start;
+        double elapsed = ((double)(finish - start))/ CLOCKS_PER_SEC;
         times[run] = elapsed;
         total_time += elapsed;
 
