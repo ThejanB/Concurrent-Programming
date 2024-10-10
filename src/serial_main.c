@@ -177,7 +177,7 @@ double run_operations(float mMember, float mInsert, float mDelete, int n, int m)
     }
 
     finish = clock();
-    elapsed = ((double)(finish - start)) * 1000000 / CLOCKS_PER_SEC;
+    elapsed = ((double)(finish - start))/ CLOCKS_PER_SEC;
 
     Free_list(&head);
 
