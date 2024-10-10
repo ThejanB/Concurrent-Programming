@@ -125,8 +125,8 @@ double run_operations(float mMember, float mInsert, float mDelete, int n, int m)
     int i;
     int total_member = 0, total_insert = 0, total_delete = 0;
     int member_count = 0, insert_count = 0, delete_count = 0;
-    struct timespec start, finish;
     double elapsed;
+    clock_t start, finish;
 
     /* Populate the linked list with n unique random values */
     int count = 0;
@@ -148,7 +148,7 @@ double run_operations(float mMember, float mInsert, float mDelete, int n, int m)
         total_member += (m - total_operations);
     }
 
-    clock_gettime(CLOCK_MONOTONIC, &start);
+    start = clock();
 
     /* Perform m random operations */
     for (int i = 0; i < m; i++) {
@@ -176,9 +176,8 @@ double run_operations(float mMember, float mInsert, float mDelete, int n, int m)
         }
     }
 
-    clock_gettime(CLOCK_MONOTONIC, &finish);
-    elapsed = (finish.tv_sec - start.tv_sec);
-    elapsed += (finish.tv_nsec - start.tv_nsec) / 1000000000.0;
+    finish = clock();
+    elapsed = ((double)(finish - start)) * 1000000 / CLOCKS_PER_SEC;
 
     Free_list(&head);
 
