@@ -98,6 +98,7 @@ int main(int argc, char* argv[]) {
 
     srand(time(NULL));
     clock_t start, finish;
+    double elapsed;
 
     double total_time = 0.0, mean, std_dev, variance;
     int initial_runs = 20;
@@ -128,7 +129,7 @@ int main(int argc, char* argv[]) {
         }
         finish = clock();
 
-        double elapsed = ((double)(finish - start))/ CLOCKS_PER_SEC;
+        elapsed = ((double)(finish - start))/ CLOCKS_PER_SEC;
         times[run] = elapsed;
         total_time += elapsed;
 
@@ -174,7 +175,7 @@ int main(int argc, char* argv[]) {
             }
             finish = clock();
 
-            double elapsed = ((double)(finish - start))/ CLOCKS_PER_SEC;
+            elapsed = ((double)(finish - start))/ CLOCKS_PER_SEC;
             times[run] = elapsed;
             total_time += elapsed;
 

@@ -87,7 +87,8 @@ int main(int argc, char* argv[]) {
 
     srand(time(NULL));
     clock_t start, finish;
-
+    double elapsed;
+    
     /* Initialize the linked list with n unique random values */
     int count = 0;
     while (count < n) {
@@ -130,7 +131,7 @@ int main(int argc, char* argv[]) {
         }
 
         finish = clock();
-        double elapsed = ((double)(finish - start))/ CLOCKS_PER_SEC;
+        elapsed = ((double)(finish - start))/ CLOCKS_PER_SEC;
         times[run] = elapsed;
         total_time += elapsed;
 
@@ -180,7 +181,7 @@ int main(int argc, char* argv[]) {
             }
 
             finish = clock();
-            double elapsed = ((double)(finish - start))/ CLOCKS_PER_SEC;
+            elapsed = ((double)(finish - start))/ CLOCKS_PER_SEC;
             times[run] = elapsed;
             total_time += elapsed;
 
