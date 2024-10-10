@@ -64,7 +64,7 @@ filters ={
 }
 
 # File paths (adjust these to your actual files)
-serial_path = '../results/Serial_results.txt'
+serial_path = '../results/serial_results.txt'
 mutex_path = '../results/mutex_results.txt'
 rw_lock_path = '../results/rw_lock_results.txt'
 
