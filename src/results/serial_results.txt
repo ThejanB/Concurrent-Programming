@@ -1,2 +1,1 @@
-n: 1000 | m: 10000 | mMember: 0.300000% | mInsert: 0.500000% | mDelete: 0.200000% | threadCount: 1 | mean: 56721.685855 | stdDev: 1813.602130
-n: 1000 | m: 10000 | mMember: 0.300000% | mInsert: 0.500000% | mDelete: 0.200000% | threadCount: 1 | mean: 58368.563200 | stdDev: 1554.340530
+n: 1000 | m: 10000 | mMember: 0.900000% | mInsert: 0.050000% | mDelete: 0.050000% | threadCount: 1 | mean: 10946.500000 | stdDev: 452.358652
