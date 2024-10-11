@@ -24,7 +24,7 @@ The implementation supports `Member()`, `Insert()`, and `Delete()` operations on
   
 ## How to Run the Program
 
-   1. open a terminal in the project directory and run the following command, 
+    1. open a terminal in the project directory and run the following command, 
         - make all
     
     2. To run the program for all test cases,
@@ -38,7 +38,7 @@ The implementation supports `Member()`, `Insert()`, and `Delete()` operations on
 
 
 ## Additionally,
-    ### Makefile Commands Summary ->
+    # Makefile Commands Summary ->
         make all         : Compiles all programs. (serial,mutex and read-write lock programs)
         make serial      : Compiles the serial program.
         make mutex       : Compiles the mutex program.
@@ -49,12 +49,12 @@ The implementation supports `Member()`, `Insert()`, and `Delete()` operations on
         make run_rw_lock : Runs the read-write lock program with predefined arguments.
         make clean       : Removes compiled executables.
 
-    ### you can compile the program for individual case by providing below command line arguments,
+    # you can compile the program for individual case by providing below command line arguments,
         gcc -o serial serial.c linked_list.c -lm
         gcc -o mutex mutex.c linked_list.c -lpthread -lm
         gcc -o rw_lock rw_lock.c linked_list.c -lpthread -lm
 
-    ### you can run the program for individual case by providing below command line arguments,
+    # you can run the program for individual case by providing below command line arguments,
         1. Thread Count: (only relevant for mutex and read_write)
         2. mMember: The probability of the member operation.
         3. mInsert: The probability of the insert operation.
