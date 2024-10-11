@@ -31,8 +31,6 @@ void* thread_work(void* rank) {
 
     if ((long)rank == thread_count - 1) my_end = total_ops; // Last thread does the rest
 
-    unsigned int seed = time(NULL) ^ (long)rank;
-
     for (int i = my_start; i < my_end; i++) {
         float prob = (float)rand() / RAND_MAX;
         int val = rand() % MAX_RANDOM;
