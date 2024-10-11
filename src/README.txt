@@ -21,7 +21,7 @@
 
     3. To generate graphs,
         - cd diagrams
-        - python3 draw_diagrams.py
+        - python3 draw_diagrams.py  ( for windows without using wsl terminal -> python draw_diagrams.py )
     (Generated graphs will be saved in diagrams folder.)
 
 # Additionally, 
