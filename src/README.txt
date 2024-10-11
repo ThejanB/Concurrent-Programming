@@ -20,8 +20,9 @@
     (Execution times for each case will be saved in results folder.)
 
     3. To generate graphs,
-        - cd graph
-        - python graph.py
+        - cd diagrams
+        - python3 draw_diagrams.py
+    (Generated graphs will be saved in diagrams folder.)
 
 # Additionally, 
     ## Makefile Commands Summary ->
@@ -35,7 +36,12 @@
         make run_rw_lock : Runs the read-write lock program with predefined arguments.
         make clean       : Removes compiled executables.
 
-    ## you can run the program for individual case by providing below command line arguments
+    ## you can compile the program for individual case by providing below command line arguments,
+        gcc -o serial serial.c linked_list.c -lm
+        gcc -o mutex mutex.c linked_list.c -lpthread -lm
+        gcc -o rw_lock rw_lock.c linked_list.c -lpthread -lm
+
+    ## you can run the program for individual case by providing below command line arguments,
         1. Thread Count: (only relevant for mutex and read_write)
         2. mMember: The probability of the member operation.
         3. mInsert: The probability of the insert operation.
@@ -55,6 +61,6 @@
             ./rw_lock 8 0.9 0.05 0.05
 
     Execution times for each case will be saved in results folder.
-    Generated Graphs will be saved in graphs folder.
+    Generated Graphs will be saved in diagrams folder.
 
 
