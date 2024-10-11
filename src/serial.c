@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
     }
 
 
-    int initial_runs = 30;  // Initial number of runs
+    int initial_runs = 100;  // Initial number of runs
     double *times; // Array to store execution times
     double sum = 0.0, mean, std_dev, variance;
 
@@ -99,7 +99,7 @@ int main(int argc, char* argv[]) {
     } else {
         required_runs = initial_runs;
     }
-
+    
     printf("Final Mean Execution Time: %f microseconds | Final Standard Deviation: %f microseconds\n", mean, std_dev);
     printf("Total Samples: %d\n\n", required_runs);
 
@@ -150,7 +150,6 @@ double run_operations(float mMember, float mInsert, float mDelete, int n, int m)
 
     start = clock();
 
-    /* Perform m random operations */
     for (int i = 0; i < m; i++) {
         float prob = (float)rand() / RAND_MAX;
         int val = rand() % MAX_RANDOM;
@@ -170,9 +169,6 @@ double run_operations(float mMember, float mInsert, float mDelete, int n, int m)
         } else if (insert_count < total_insert) {
             Insert(val, &head);
             insert_count++;
-        } else if (delete_count < total_delete) {
-            Delete(val, &head);
-            delete_count++;
         }
     }
 

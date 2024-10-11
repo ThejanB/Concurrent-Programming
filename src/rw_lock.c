@@ -102,7 +102,7 @@ int main(int argc, char* argv[]) {
 
     /* Timing variables */
     double total_time = 0.0, mean, std_dev, variance;
-    int initial_runs = 30;
+    int initial_runs = 100;
     double* times = malloc(initial_runs * sizeof(double));
     if (times == NULL) {
         fprintf(stderr, "Failed to allocate memory for times array\n");
