@@ -1,1 +1,3 @@
-n: 1000 | m: 10000 | mMember: 0.900000% | mInsert: 0.050000% | mDelete: 0.050000% | threadCount: 1 | mean: 10946.500000 | stdDev: 452.358652
+n: 1000 | m: 10000 | mMember: 0.990000% | mInsert: 0.005000% | mDelete: 0.005000% | threadCount: 1 | mean: 9203.220000 | stdDev: 294.972832
+n: 1000 | m: 10000 | mMember: 0.900000% | mInsert: 0.050000% | mDelete: 0.050000% | threadCount: 1 | mean: 13113.390000 | stdDev: 1034.505011
+n: 1000 | m: 10000 | mMember: 0.500000% | mInsert: 0.250000% | mDelete: 0.250000% | threadCount: 1 | mean: 17533.600000 | stdDev: 812.969663

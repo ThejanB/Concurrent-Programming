@@ -47,6 +47,8 @@ def getData():
     return data
 
 def extract_data(line, method_name, data):
+    if not line.strip():
+        return
     parts = line.strip().split('|')
     result = {}
     for part in parts:
@@ -78,6 +80,7 @@ def extract_data(line, method_name, data):
             break
 
 def plot_graph(case, mMember, mInsert, mDelete, data):
+    print(f'Plotting graph for {case} with mMember: {mMember}, mInsert: {mInsert}, mDelete: {mDelete}')
     method_data = data[case]
 
    # Get unique thread counts
@@ -116,7 +119,6 @@ def plot_graph(case, mMember, mInsert, mDelete, data):
     print(f'Plot saved as {case}.png in the graphs folder.')
     plt.show()
 
-# Main execution
 def main():
     data = getData()
     for case, mMember_value, mInsert_value, mDelete_value in cases:

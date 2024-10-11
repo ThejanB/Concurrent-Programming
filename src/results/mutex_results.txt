@@ -1,4 +1,12 @@
-n: 1000 | m: 10000 | mMember: 0.900000% | mInsert: 0.050000% | mDelete: 0.050000% | threadCount: 2 | mean: 73958.991033 | stdDev: 14168.890120
-n: 1000 | m: 10000 | mMember: 0.900000% | mInsert: 0.050000% | mDelete: 0.050000% | threadCount: 1 | mean: 13527.655150 | stdDev: 625.432156
-n: 1000 | m: 10000 | mMember: 0.900000% | mInsert: 0.050000% | mDelete: 0.050000% | threadCount: 4 | mean: 50777.669712 | stdDev: 9909.527339
-n: 1000 | m: 10000 | mMember: 0.900000% | mInsert: 0.050000% | mDelete: 0.050000% | threadCount: 8 | mean: 57746.247613 | stdDev: 8142.724183
+n: 1000 | m: 10000 | mMember: 0.990000% | mInsert: 0.005000% | mDelete: 0.005000% | threadCount: 1 | mean: 10878.243513 | stdDev: 6856.175735
+n: 1000 | m: 10000 | mMember: 0.990000% | mInsert: 0.005000% | mDelete: 0.005000% | threadCount: 2 | mean: 16598.130841 | stdDev: 4345.589421
+n: 1000 | m: 10000 | mMember: 0.990000% | mInsert: 0.005000% | mDelete: 0.005000% | threadCount: 4 | mean: 15090.909091 | stdDev: 4897.508304
+n: 1000 | m: 10000 | mMember: 0.990000% | mInsert: 0.005000% | mDelete: 0.005000% | threadCount: 8 | mean: 16014.285714 | stdDev: 4413.820209
+n: 1000 | m: 10000 | mMember: 0.900000% | mInsert: 0.050000% | mDelete: 0.050000% | threadCount: 1 | mean: 14199.438202 | stdDev: 5727.334972
+n: 1000 | m: 10000 | mMember: 0.900000% | mInsert: 0.050000% | mDelete: 0.050000% | threadCount: 2 | mean: 18874.172185 | stdDev: 5855.259329
+n: 1000 | m: 10000 | mMember: 0.900000% | mInsert: 0.050000% | mDelete: 0.050000% | threadCount: 4 | mean: 16467.105263 | stdDev: 5328.814292
+n: 1000 | m: 10000 | mMember: 0.900000% | mInsert: 0.050000% | mDelete: 0.050000% | threadCount: 8 | mean: 16550.000000 | stdDev: 3297.917923
+n: 1000 | m: 10000 | mMember: 0.500000% | mInsert: 0.250000% | mDelete: 0.250000% | threadCount: 1 | mean: 29236.842105 | stdDev: 7627.735408
+n: 1000 | m: 10000 | mMember: 0.500000% | mInsert: 0.250000% | mDelete: 0.250000% | threadCount: 2 | mean: 31140.000000 | stdDev: 5945.917876
+n: 1000 | m: 10000 | mMember: 0.500000% | mInsert: 0.250000% | mDelete: 0.250000% | threadCount: 4 | mean: 20216.748768 | stdDev: 6924.795116
+n: 1000 | m: 10000 | mMember: 0.500000% | mInsert: 0.250000% | mDelete: 0.250000% | threadCount: 8 | mean: 16511.450382 | stdDev: 4890.125706

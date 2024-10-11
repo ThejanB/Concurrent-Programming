@@ -34,8 +34,8 @@ void* thread_work(void* rank) {
     unsigned int seed = time(NULL) ^ (long)rank;
 
     for (int i = my_start; i < my_end; i++) {
-        float prob = (float)rand_r(&seed) / RAND_MAX;
-        int val = rand_r(&seed) % MAX_RANDOM;
+        float prob = (float)rand() / RAND_MAX;
+        int val = rand() % MAX_RANDOM;
 
         if (prob < (float)mMember / total_ops) {
             pthread_mutex_lock(&mutex);

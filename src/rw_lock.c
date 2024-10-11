@@ -31,11 +31,9 @@ void* thread_work(void* rank) {
 
     if ((long)rank == thread_count - 1) my_end = total_ops; // Last thread does the rest
 
-    unsigned int seed = time(NULL) ^ (long)rank; // Seed for rand_r
-
     for (int i = my_start; i < my_end; i++) {
-        float prob = (float)rand_r(&seed) / RAND_MAX;
-        int val = rand_r(&seed) % MAX_RANDOM;
+        float prob = (float)rand() / RAND_MAX;
+        int val = rand() % MAX_RANDOM;
 
         if (prob < (float)mMember / total_ops) {
             pthread_rwlock_rdlock(&rwlock);
