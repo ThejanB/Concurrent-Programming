@@ -118,8 +118,6 @@ public class BusStopSimulation {
         System.out.println("Bus mean inter-arrival time: " + RIDER_ARRIVAL_MEAN + " minutes");
         System.out.println("Rider mean inter-arrival time: " + BUS_ARRIVAL_MEAN + " seconds\n");
 
-        System.out.println("Rider 12 arrived. Waiting riders: 1\nRider 13 arrived. Waiting riders: 2\nBus 14 arrived.\nBus 14 is boarding 2 riders.\nRider 12 is boarding.\nRider 13 is boarding.\nBus 14 is departing.");
-
         // Rider generator thread with 30 sec mean inter-arrival time
         Thread riderGenerator = new Thread(() -> {
             Random rand = new Random();
