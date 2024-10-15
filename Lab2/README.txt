@@ -11,6 +11,7 @@ How ro Run ->
             - java .\BusStopSimulation [busMeanMinutes] [riderMeanSeconds]
                 
                 eg: java .\BusStopSimulation 25 1.5
+		    java .\BusStopSimulation 60 20
 
     3. Termination
         Press Ctrl + C to terminate the simulation
