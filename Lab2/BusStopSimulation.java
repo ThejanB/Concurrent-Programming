@@ -168,7 +168,3 @@ public class BusStopSimulation {
         busGenerator.start();
     }
 }
-
-
-
-
