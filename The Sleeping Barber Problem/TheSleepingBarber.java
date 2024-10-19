@@ -54,10 +54,12 @@ public class TheSleepingBarber {
     public static class Barber implements Runnable {
         private BarberShop barberShop;
         private int id;
+        private int haircutTime;
 
-        public Barber(BarberShop barberShop, int id) {
+        public Barber(BarberShop barberShop, int id, int haircutTime) {
             this.barberShop = barberShop;
             this.id = id;
+            this.haircutTime = haircutTime;
         }
 
         @Override
@@ -71,7 +73,7 @@ public class TheSleepingBarber {
 
                     barberShop.barber.release();   // Signal customer that barber is ready
                     System.out.println("Barber " + id + " started cutting hair.");
-                    Thread.sleep(10000);            // Haircut time (mean 10 sec)
+                    Thread.sleep(this.haircutTime*1000);            // Haircut time (10 sec)
                     System.out.println("Barber " + id + " has finished cutting hair.");
                 }
             } catch (InterruptedException e) {
@@ -84,36 +86,36 @@ public class TheSleepingBarber {
     // Main simulation
     public static void main(String[] args) {
         double tempCustomerArrivalMean = 5;     // Customer mean inter-arrival time in sec: 5 sec
-        double tempHaircutTimeMean = 10;        // Haircut mean time in sec: 10 sec
+        int tempHaircutTime = 10;        // Haircut mean time in sec: 10 sec
         int tempMaxWaitingCustomers = 5;     // Maximum number of waiting customers: 5 customers
         int tempNumberOfBarbers = 2;         // Number of barbers: 1 barber
 
         try {
-            if (args.length == 2) {
+            if (args.length == 4) {
                 tempCustomerArrivalMean = Double.parseDouble(args[0]);
-                tempHaircutTimeMean = Double.parseDouble(args[1]);
+                tempHaircutTime = Integer.parseInt(args[1]);
                 tempMaxWaitingCustomers = Integer.parseInt(args[2]);
                 tempNumberOfBarbers = Integer.parseInt(args[3]);
     
             } else if (args.length > 0) {
-                System.err.println("Invalid number of input arguments. Using default values.\n");
-                System.out.println("Usage: java TheSleepingBarber [customerMeanSeconds] [haircutMeanSeconds] [maxWaitingCustomers] [numberOfBarbers]");
+                System.err.println("Invalid number of input arguments.");
+                System.out.println("Usage: java TheSleepingBarber [customerMeanSeconds] [haircutMean] [maxWaitingCustomers] [numberOfBarbers]");
                 System.exit(0);
             }
         } catch (Exception e) {
             System.err.println("Invalid input arguments.");
-            System.out.println("Usage: java TheSleepingBarber [customerMeanSeconds] [haircutMeanSeconds] [maxWaitingCustomers] [numberOfBarbers]");
+            System.out.println("Usage: java TheSleepingBarber [customerMeanSeconds] [haircutMean] [maxWaitingCustomers] [numberOfBarbers]");
             System.exit(0);
         }
         
         final double CUSTOMER_ARRIVAL_MEAN = tempCustomerArrivalMean;
-        final double HAIRCUT_TIME_MEAN = tempHaircutTimeMean;
+        final int HAIRCUT_TIME = tempHaircutTime;
         final int MAX_WAITING_CUSTOMERS = tempMaxWaitingCustomers;
         final int NUMBER_OF_BARBERS = tempNumberOfBarbers;
 
         System.out.println("\nThe Sleeping Barber Problem using Semaphores starting...");
         System.out.println("Customer mean inter-arrival time: " + CUSTOMER_ARRIVAL_MEAN + " seconds");
-        System.out.println("Haircut mean time: " + HAIRCUT_TIME_MEAN + " seconds");
+        System.out.println("Haircut time: " + HAIRCUT_TIME + " seconds");
         System.out.println("Maximum number of waiting customers: " + MAX_WAITING_CUSTOMERS + " customers");
         System.out.println("Number of barbers: " + NUMBER_OF_BARBERS + " barber(s)\n");
         
@@ -144,7 +146,7 @@ public class TheSleepingBarber {
 
         // barber threads with 10 sec mean haircut time
         for (int i = 1; i <= NUMBER_OF_BARBERS; i++) {
-            new Thread(new Barber(barberShop, i)).start();
+            new Thread(new Barber(barberShop, i, HAIRCUT_TIME)).start();
         }
 
         customerGenerator.start(); // Start customer generator thread
